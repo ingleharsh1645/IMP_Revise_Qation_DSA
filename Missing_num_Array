@@ -1,0 +1,192 @@
+// missing element on the array :
+// input : [3,0,1]
+// output : 2
+
+
+// solution (1)
+class Solution {
+    public int missingNumber(int[] nums) {
+        // Optimize Approaches : 
+        // Time Complexity : O(n)
+        // Space Complexity : O(1)
+
+     int n = nums.length;
+     //Sabse pehle 'n' ko le liya (kyunki loop 0 to n-1 chalega) 
+      int miss_num = n ;
+      // 0 to n-1 takk akk loop chalega :
+      for(int i=0;i<n;i++){
+         miss_num = miss_num ^ i ^ nums[i];
+      }
+
+        return miss_num;
+
+    }
+}
+
+// solution (2)
+// Better Approches : 
+class Solution {
+    public int missingNumber(int[] nums) {
+        int n = nums.length;
+        // HashSet where used the stored the singal value 
+
+        // HashSet : singal value jab used hota hai tab HashSet used hota hai (like number,password,single integer)(duplicate na hoo)
+
+        // HashMap : jab appko pair me data check karna ho (like naam or number,roll num or nam)
+
+        HashSet<Integer> arr = new HashSet<>();
+        for(int i=0;i<n;i++){
+            arr.add(nums[i]);
+        }
+        for(int i=0;i<=n;i++){
+         if(!arr.contains(i)){
+            return i;
+         }
+        }
+         return -1;
+        
+    }
+}
+
+
+// solution (3)
+// Bruteforce Approaches : 
+class Solution {
+    public int missingNumber(int[] nums) {
+        // Bruteforce Approaches will be :
+        // Time Complexity : O(N)^2 
+        // Space Complexity : O(1) 
+
+      // Dry run : 
+      //[3,0,1] ===> 
+      // i=0 => nums[0]=3,nums[1]=0,nums[2]=1 ==> yes '0' are present 
+      // i=1 => nums[0]=0 ,nums[1]=0,nums[2]=1 ==> yes '1' are present 
+      // i=2 => nums[0]=3,nums[1]=0,nums[2]=1 ==> no '2' are not present
+      // i=3 => nums[0]=3,nums[1]=0,nums[2]=1 ==> yes '3' are present 
+      // output : 2 
+
+        int n = nums.length;
+
+        for(int i=0;i<=n;i++){
+           boolean miss_num = false ;
+
+         for(int j=0;j<n;j++){
+            if(nums[j]==i){
+              miss_num = true ;
+           }
+        }
+
+        if(miss_num!=true){
+            return i;
+        }
+     }
+
+     // Dummy output :
+     return -1;
+    }
+}
+
+
+// solution (4)
+// thats approaches are good but in bigger value like n=10^5 so they used the long and such 
+class Solution {
+    public int missingNumber(int[] nums) {
+        // Optimize Approaches : 
+        int sum =0;
+        int n = nums.length;
+        // sum of n th number : 
+        int sum_N = n*(n+1)/2;
+
+        for(int i=0;i<n;i++){
+            sum+=nums[i];
+        }
+         
+         int miss_num=sum_N-sum;
+
+
+        return miss_num;
+    }
+}
+
+
+// solution (5)
+// very best method and optimizing solution 
+class Solution {
+    public int missingNumber(int[] nums) {
+        // Optimize Approaches : 
+        // Time Complexity : O(2n)
+        // Space Complexity : O(1)
+
+      // xor Method : A ^ A = 0 and A ^ 0 = A 
+      // Dry run Code : 
+      // nums[3,0,1] => 0,1,2,3 ^ 3,0,1 = 2 
+      // xor1 = 0,1,2,3 - - -  -(xor1 = 0)
+      // xor1 ^ i :
+      // 0 ^ 0 = 0
+      // 0 ^ 1 = 1
+      // 1 ^ 2 = 3  - - -  - - {01 ^ 10 = 11 ==> 3}
+      // 3 ^ 3 = 0
+      // xor1 = 0 
+      
+      // xor2 ^ nums[i]
+      // xor2 = 0 
+      // 0 ^ 3 = 3
+      // 3 ^ 0 = 3
+      // 3 ^ 1 = 2  - -  - -   - -{11 ^ 01 = 10 ==> 2}
+      // xor2 = 2
+
+      // xor1 ^ xor2 = 0 ^ 2 => 2 
+
+
+      // another dry run : [0,1]
+      // xor1 = 0 
+      // 0 ^ 0 = 0
+      // 0 ^ 1 = 1
+      // 1 ^ 2 = 3 - - - - -  -{01 ^ 10 = 11 ==> 3}
+      // xor1 = 3
+      // xor2 = 0
+      // 0 ^ 0 = 0
+      // 0 ^ 1 = 1 
+      // xor2 = 1
+
+      // xor1 ^ xor2 = 3 ^ 1 => 2  -- - ----{11 ^ 01 = 10} 
+
+     int n = nums.length;
+      int xor1 = 0;
+      int xor2 = 0;
+      for(int i =0;i<=n;i++){
+        xor1 = xor1 ^ i; 
+      }
+
+      for(int i =0;i<n;i++){
+        xor2 = xor2 ^ nums[i];
+      }
+        
+        int miss_num = xor1 ^ xor2 ;
+
+        return miss_num;
+
+    }
+}
+
+
+// also these are used 
+class Solution {
+    public int missingNumber(int[] nums) {
+        // Optimize Approaches : 
+        // Time Complexity : O(n)
+        // Space Complexity : O(1)
+
+     int n = nums.length;
+     //Sabse pehle 'n' ko le liya (kyunki loop 0 to n-1 chalega) 
+      int miss_num = n ;
+      // 0 to n-1 takk akk loop chalega :
+      for(int i=0;i<n;i++){
+         miss_num = miss_num ^ i ^ nums[i];
+      }
+
+        return miss_num;
+
+    }
+}
+
