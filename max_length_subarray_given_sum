@@ -1,0 +1,58 @@
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        // Brute force approaches : 
+        // code here
+        // time limit exceed ke vajah se testcase pass nahi hote O(N)^2 time complexity
+        
+        // int max_length = 0;
+        // int n = arr.length;
+        
+        
+        // for(int i=0;i<n;i++){
+        //     long sum = 0;
+        //     for(int j=i;j<n;j++){
+        //         sum+=arr[j];
+        //         if(sum == k){
+        //             max_length=Math.max(max_length,j-i+1);
+        //         }
+        //     }
+            
+        // }
+        //  return max_length;
+        
+        
+        // Better Approaches : 
+        // Using Hashing in HashMap:
+    
+         // create the Hashmap : 
+        HashMap<Long,Integer>p1 = new HashMap<>();
+        int length = 0;
+        int max_length = 0;
+        int n = arr.length;
+        
+        long sum = 0;
+        for(int i=0;i<n;i++){
+            sum+=arr[i];
+            if(sum==k){
+                max_length = i+1;
+            }
+            
+            long k1 = sum - k;
+            if(p1.containsKey(k1)){
+                length = i - p1.get(k1);
+            }
+            
+            
+            // joh sum map me nahi hai aur unique repeat unko map me daldo 
+            if(!p1.containsKey(sum)){
+                p1.put(sum,i);
+            }
+            max_length = Math.max(length,max_length);
+             
+            
+        }
+        return max_length;
+        
+        
+    }
+}
